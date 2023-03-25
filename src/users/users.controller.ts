@@ -1,9 +1,18 @@
-import { Controller, Get, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Query,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { HabitsService } from 'src/habits/habits.service';
 import { CreateHabitDto } from 'src/habits/dto/create-habit.dto';
+import { FilterHabitsDto } from 'src/habits/dto/filter-habit.dto';
 
 @Controller('users')
 export class UsersController {
@@ -28,8 +37,11 @@ export class UsersController {
   }
 
   @Get(':id/habits')
-  findAllHabitsByUserId(@Param('id') id: string) {
-    return this.habitsService.findAllByUserId(+id);
+  findAllHabitsByUserId(
+    @Param('id') id: string,
+    @Query() filterHabitsDto: FilterHabitsDto,
+  ) {
+    return this.habitsService.findAllByUserId(+id, filterHabitsDto);
   }
 
   @Post(':id/habits')

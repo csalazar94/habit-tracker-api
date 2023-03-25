@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateHabitDto } from './dto/create-habit.dto';
+import { FilterHabitsDto } from './dto/filter-habit.dto';
 import { UpdateHabitDto } from './dto/update-habit.dto';
 
 @Injectable()
@@ -15,8 +16,15 @@ export class HabitsService {
     return this.prisma.habit.findUnique({ where: { id } });
   }
 
-  findAllByUserId(userId: number) {
-    return this.prisma.habit.findMany({ where: { userId } });
+  findAllByUserId(userId: number, filterHabitsDto: FilterHabitsDto) {
+    return this.prisma.habit.findMany({
+      where: {
+        userId,
+        habitCategoryId: filterHabitsDto.habitCategoryId,
+        name: { contains: filterHabitsDto.name },
+        description: { contains: filterHabitsDto.description },
+      },
+    });
   }
 
   update(id: number, updateHabitDto: UpdateHabitDto) {

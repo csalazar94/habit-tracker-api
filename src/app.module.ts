@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { HabitsModule } from './habits/habits.module';
 import { HabitCategoriesModule } from './habit-categories/habit-categories.module';
 import { GoalsModule } from './goals/goals.module';
+import { RemindersModule } from './reminders/reminders.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { GoalsModule } from './goals/goals.module';
     HabitsModule,
     HabitCategoriesModule,
     GoalsModule,
+    RemindersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

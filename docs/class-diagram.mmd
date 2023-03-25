@@ -39,9 +39,9 @@ classDiagram
         -categoryId: int
         -createdAt: Date
         -updatedAt: Date
-        +createGoal(frequency: int, value: int): Goal
+        +createGoal(frequency: int, targetValue: int): Goal
         +getGoals(): Goal[]
-        +createReminder(message: string, time: Date): Reminder
+        +createReminder(message: string, cronConfig: string): Reminder
         +getReminders(): Reminder[]
         +addDailyRecord(date: Date): void
         +getDailyRecords(): DailyRecord[]
@@ -58,7 +58,7 @@ classDiagram
         -habitId: int
         -createdAt: Date
         -updatedAt: Date
-        +editGoal(frequency: int, value: int): void
+        +editGoal(frequency: int, targetValue: int): void
         +deleteGoal(): void
         +findGoalById(id: int): Goal
         -habit: Habit
@@ -67,11 +67,11 @@ classDiagram
     class Reminder {
         -id: int
         -message: string
-        -time: Date
+        -cronConfig: string
         -habitId: int
         -createdAt: Date
         -updatedAt: Date
-        +editReminder(message: string, time: Date): void
+        +editReminder(message: string, cronConfig: string): void
         +deleteReminder(): void
         +findReminderById(id: int): Reminder
         -habit: Habit

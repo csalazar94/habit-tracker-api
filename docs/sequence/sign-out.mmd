@@ -1,0 +1,9 @@
+sequenceDiagram
+    participant User
+    participant App
+    participant Server
+    User ->> App: Selecciona la opción "Cerrar sesión"
+    App ->> Server: Envía solicitud para cerrar sesión
+    Server ->> App: Confirma cierre de sesión
+    App ->> User: Redirige a pantalla de inicio de sesión
+

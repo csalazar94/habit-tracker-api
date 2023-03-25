@@ -1,0 +1,10 @@
+sequenceDiagram
+    participant User
+    participant Server
+    participant Database
+    
+    User->>+Server: Envía los datos de registro
+    Server->>+Database: Guarda los datos en la base de datos
+    Database-->>-Server: Confirma la creación de la cuenta
+    Server-->>-User: Envía un mensaje de confirmación
+

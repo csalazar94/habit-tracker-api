@@ -1,0 +1,11 @@
+sequenceDiagram
+    participant User
+    participant App
+    participant Database
+    User->>+App: Accede a la opción de crear un nuevo hábito
+    App->>+User: Muestra el formulario para crear un nuevo hábito
+    User->>+App: Ingresa el nombre y la descripción del hábito
+    App->>+Database: Guarda la información del nuevo hábito
+    Database-->>-App: Confirma la creación del hábito
+    App-->>-User: Muestra un mensaje de confirmación de la creación del hábito
+

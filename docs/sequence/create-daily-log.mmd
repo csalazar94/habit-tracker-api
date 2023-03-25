@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant User
+    participant App
+    participant Server
+    
+    User ->> App: Ingresar a la sección "Registro diario"
+    App ->> Server: Solicitar los registros diarios existentes
+    Server -->> App: Devolver los registros diarios existentes
+    App ->> User: Mostrar los registros diarios existentes
+    User ->> App: Seleccionar el día para el registro
+    App ->> Server: Solicitar el registro diario del día seleccionado
+    Server -->> App: Devolver el registro diario del día seleccionado
+    App ->> User: Mostrar el registro diario del día seleccionado
+    User ->> App: Indicar si se ha cumplido el objetivo diario
+    App ->> Server: Enviar el registro diario actualizado
+    Server -->> App: Confirmar la actualización del registro diario
+    App ->> User: Mostrar la confirmación de la actualización del registro diario
+

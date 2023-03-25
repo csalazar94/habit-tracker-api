@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant User
+    participant App
+    participant Server
+    User->>App: Inicia sesión
+    User->>App: Selecciona hábito
+    App->>Server: Solicita información de recordatorios
+    Server-->>App: Devuelve información de recordatorios
+    App->>User: Muestra lista de recordatorios del hábito
+    User->>App: Selecciona un recordatorio para editar
+    App->>User: Muestra formulario de edición de recordatorio
+    User->>App: Ingresa nueva hora y mensaje
+    App->>Server: Actualiza información del recordatorio
+    Server-->>App: Confirma actualización del recordatorio
+    App->>User: Muestra mensaje de confirmación
+

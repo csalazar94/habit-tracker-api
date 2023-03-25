@@ -1,0 +1,17 @@
+sequenceDiagram
+    participant Usuario
+    participant App
+    participant Servidor
+    Usuario->>App: Accede a la configuración de recordatorios
+    App->>Servidor: Solicita la lista de hábitos del usuario
+    Servidor->>App: Retorna la lista de hábitos
+    App->>Usuario: Muestra la lista de hábitos al usuario
+    Usuario->>App: Selecciona el hábito para configurar el recordatorio
+    App->>Servidor: Solicita los detalles del hábito seleccionado
+    Servidor->>App: Retorna los detalles del hábito
+    App->>Usuario: Muestra los detalles del hábito al usuario
+    Usuario->>App: Establece el mensaje y hora para recibir el recordatorio
+    App->>Servidor: Guarda el mensaje y hora para el recordatorio del hábito
+    Servidor->>App: Retorna la confirmación de guardado
+    App->>Usuario: Muestra la confirmación de guardado al usuario
+

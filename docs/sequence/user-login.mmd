@@ -1,0 +1,10 @@
+sequenceDiagram
+    participant User
+    participant App
+    User->>App: Abre la aplicación
+    App->>User: Muestra la pantalla de inicio de sesión
+    User->>App: Ingresa su correo electrónico y contraseña
+    App->>Server: Valida las credenciales del usuario
+    Server->>App: Confirma que las credenciales son correctas
+    App->>User: Inicia sesión y accede a la pantalla principal de la aplicación
+

@@ -1,0 +1,14 @@
+sequenceDiagram
+    participant User
+    participant App
+    participant Database
+
+    User->>App: Selecciona hábito a eliminar
+    App->>Database: Consulta hábito y registros asociados
+    Database-->>App: Devuelve información del hábito y registros
+    App->>User: Confirma eliminación
+    User->>App: Confirma eliminación
+    App->>Database: Elimina hábito y registros asociados
+    Database-->>App: Confirma eliminación
+    App-->>User: Muestra mensaje de éxito
+

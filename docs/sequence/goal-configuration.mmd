@@ -1,0 +1,12 @@
+sequenceDiagram
+    participant User
+    participant App
+    participant Database
+
+    User->>+App: Selecciona hábito
+    App->>+User: Muestra opciones de objetivo
+    User->>+App: Establece frecuencia y valor objetivo
+    App->>+Database: Actualiza información de objetivo
+    Database-->>-App: Confirma actualización
+    App-->>-User: Muestra confirmación de actualización
+

@@ -8,6 +8,7 @@ import { HabitsModule } from './habits/habits.module';
 import { HabitCategoriesModule } from './habit-categories/habit-categories.module';
 import { GoalsModule } from './goals/goals.module';
 import { RemindersModule } from './reminders/reminders.module';
+import { DailyRecordsModule } from './daily-records/daily-records.module';
 
 @Module({
   imports: [
@@ -18,6 +19,7 @@ import { RemindersModule } from './reminders/reminders.module';
     HabitCategoriesModule,
     GoalsModule,
     RemindersModule,
+    DailyRecordsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -40,8 +40,7 @@ export class RemindersController {
   }
 
   @Delete(':id')
-  remove(@Param('id') id: number): Promise<Reminder> {
+  remove(@Param('id') id: number): Promise<void> {
     return this.remindersService.remove(+id);
   }
 }
-

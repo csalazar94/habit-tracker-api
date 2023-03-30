@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Habit } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateHabitDto } from './dto/create-habit.dto';
 import { FilterHabitsDto } from './dto/filter-habit.dto';
@@ -8,15 +9,18 @@ import { UpdateHabitDto } from './dto/update-habit.dto';
 export class HabitsService {
   constructor(private prisma: PrismaService) {}
 
-  create(createHabitDto: CreateHabitDto) {
+  create(createHabitDto: CreateHabitDto): Promise<Habit> {
     return this.prisma.habit.create({ data: createHabitDto });
   }
 
-  findOne(id: number) {
+  findOne(id: number): Promise<Habit> {
     return this.prisma.habit.findUnique({ where: { id } });
   }
 
-  findAllByUserId(userId: number, filterHabitsDto: FilterHabitsDto) {
+  findAllByUserId(
+    userId: number,
+    filterHabitsDto: FilterHabitsDto,
+  ): Promise<Habit[]> {
     return this.prisma.habit.findMany({
       where: {
         userId,
@@ -27,7 +31,7 @@ export class HabitsService {
     });
   }
 
-  update(id: number, updateHabitDto: UpdateHabitDto) {
+  update(id: number, updateHabitDto: UpdateHabitDto): Promise<Habit> {
     return this.prisma.habit.update({
       where: { id },
       data: updateHabitDto,

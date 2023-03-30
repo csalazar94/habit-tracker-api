@@ -1,4 +1,5 @@
 import { Controller, Get } from '@nestjs/common';
+import { HabitCategory } from '@prisma/client';
 import { HabitCategoriesService } from './habit-categories.service';
 
 @Controller('habit-categories')
@@ -8,7 +9,7 @@ export class HabitCategoriesController {
   ) {}
 
   @Get()
-  findAll() {
+  findAll(): Promise<HabitCategory[]> {
     return this.habitCategoriesService.findAll();
   }
 }

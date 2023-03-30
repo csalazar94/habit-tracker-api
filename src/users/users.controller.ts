@@ -13,6 +13,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { HabitsService } from 'src/habits/habits.service';
 import { CreateHabitDto } from 'src/habits/dto/create-habit.dto';
 import { FilterHabitsDto } from 'src/habits/dto/filter-habit.dto';
+import { Habit, User } from '@prisma/client';
 
 @Controller('users')
 export class UsersController {
@@ -22,17 +23,20 @@ export class UsersController {
   ) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  create(@Body() createUserDto: CreateUserDto): Promise<User> {
     return this.usersService.create(createUserDto);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string): Promise<User> {
     return this.usersService.findOne(+id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+  ): Promise<User> {
     return this.usersService.update(+id, updateUserDto);
   }
 
@@ -40,12 +44,15 @@ export class UsersController {
   findAllHabitsByUserId(
     @Param('id') id: string,
     @Query() filterHabitsDto: FilterHabitsDto,
-  ) {
+  ): Promise<Habit[]> {
     return this.habitsService.findAllByUserId(+id, filterHabitsDto);
   }
 
   @Post(':id/habits')
-  createHabit(@Param('id') id: string, @Body() createHabitDto: CreateHabitDto) {
+  createHabit(
+    @Param('id') id: string,
+    @Body() createHabitDto: CreateHabitDto,
+  ): Promise<Habit> {
     return this.habitsService.create({ ...createHabitDto, userId: +id });
   }
 }

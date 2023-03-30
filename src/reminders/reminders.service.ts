@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { Reminder } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateReminderDto } from './dto/create-reminder.dto';
 import { UpdateReminderDto } from './dto/update-reminder.dto';
@@ -7,7 +8,7 @@ import { UpdateReminderDto } from './dto/update-reminder.dto';
 export class RemindersService {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateReminderDto) {
+  async create(data: CreateReminderDto): Promise<Reminder> {
     const { habitId, ...rest } = data;
     const habit = await this.prisma.habit.findUnique({
       where: { id: habitId },
@@ -23,11 +24,11 @@ export class RemindersService {
     });
   }
 
-  async findAll() {
+  async findAll(): Promise<Reminder[]> {
     return this.prisma.reminder.findMany();
   }
 
-  async findOne(id: number) {
+  async findOne(id: number): Promise<Reminder> {
     const reminder = await this.prisma.reminder.findUnique({
       where: { id },
       include: { habit: true },
@@ -38,7 +39,7 @@ export class RemindersService {
     return reminder;
   }
 
-  async update(id: number, data: UpdateReminderDto) {
+  async update(id: number, data: UpdateReminderDto): Promise<Reminder> {
     const { habitId, ...rest } = data;
     const habit = await this.prisma.habit.findUnique({
       where: { id: habitId },
@@ -55,8 +56,7 @@ export class RemindersService {
     });
   }
 
-  async remove(id: number) {
-    return this.prisma.reminder.delete({ where: { id } });
+  async remove(id: number): Promise<void> {
+    await this.prisma.reminder.delete({ where: { id } });
   }
 }
-

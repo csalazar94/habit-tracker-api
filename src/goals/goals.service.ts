@@ -41,4 +41,3 @@ export class GoalsService {
     await this.prisma.goal.delete({ where: { id } });
   }
 }
-

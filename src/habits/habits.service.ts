@@ -36,10 +36,9 @@ export class HabitsService {
         userId,
         habitCategoryId: filterHabitsDto.habitCategoryId,
         name: { contains: filterHabitsDto.name },
-        description: { contains: filterHabitsDto.description },
       },
       include: {
-        habitCategory: { select: { name: true } },
+        habitCategory: { select: { name: true, icon: true } },
         dailyRecords: { select: { date: true } },
       },
     });

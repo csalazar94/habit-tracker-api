@@ -10,10 +10,13 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { HabitsService } from 'src/habits/habits.service';
+import {
+  HabitsService,
+  HabitWithCategoryAndRecords,
+} from 'src/habits/habits.service';
 import { CreateHabitDto } from 'src/habits/dto/create-habit.dto';
 import { FilterHabitsDto } from 'src/habits/dto/filter-habit.dto';
-import { Habit, User } from '@prisma/client';
+import { DailyRecord, Habit, User } from '@prisma/client';
 import * as dayjs from 'dayjs';
 
 @Controller('users')
@@ -21,7 +24,12 @@ export class UsersController {
   constructor(
     private readonly usersService: UsersService,
     private readonly habitsService: HabitsService,
-  ) { }
+  ) {}
+  FREQUENCY_DICT = {
+    weekly: 'week',
+    monthly: 'month',
+    yearly: 'year',
+  };
 
   @Post()
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
@@ -51,14 +59,11 @@ export class UsersController {
       filterHabitsDto,
     );
     return habits.map((habit) => {
-      const FREQUENCY_DICT = {
-        daily: 'day',
-        weekly: 'week',
-        monthly: 'month',
-        yearly: 'year',
-      };
       const count: number = habit.dailyRecords.filter((record) =>
-        dayjs(record.date).isSame(dayjs(), FREQUENCY_DICT[habit.frequency]),
+        dayjs(record.date).isSame(
+          dayjs(),
+          this.FREQUENCY_DICT[habit.frequency],
+        ),
       ).length;
       return {
         ...habit,
@@ -68,10 +73,20 @@ export class UsersController {
   }
 
   @Post(':id/habits')
-  createHabit(
+  async createHabit(
     @Param('id') id: string,
     @Body() createHabitDto: CreateHabitDto,
-  ): Promise<Habit> {
-    return this.habitsService.create({ ...createHabitDto, userId: +id });
+  ) {
+    const habit = await this.habitsService.create({
+      ...createHabitDto,
+      userId: +id,
+    });
+    const count: number = habit.dailyRecords.filter((record: DailyRecord) =>
+      dayjs(record.date).isSame(dayjs(), this.FREQUENCY_DICT[habit.frequency]),
+    ).length;
+    return {
+      ...habit,
+      progress: count / habit.target || 0,
+    };
   }
 }

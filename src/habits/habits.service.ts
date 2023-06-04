@@ -5,22 +5,28 @@ import { CreateHabitDto } from './dto/create-habit.dto';
 import { FilterHabitsDto } from './dto/filter-habit.dto';
 import { UpdateHabitDto } from './dto/update-habit.dto';
 
-const habitsWithCategoryAndRecords = Prisma.validator<Prisma.HabitArgs>()({
+const habitWithCategoryAndRecords = Prisma.validator<Prisma.HabitArgs>()({
   include: {
-    habitCategory: { select: { name: true } },
+    habitCategory: { select: { name: true, icon: true } },
     dailyRecords: { select: { date: true } },
   },
 });
-type HabitsWithCategoryAndRecords = Prisma.HabitGetPayload<
-  typeof habitsWithCategoryAndRecords
+export type HabitWithCategoryAndRecords = Prisma.HabitGetPayload<
+  typeof habitWithCategoryAndRecords
 >;
 
 @Injectable()
 export class HabitsService {
   constructor(private prisma: PrismaService) {}
 
-  create(createHabitDto: CreateHabitDto): Promise<Habit> {
-    return this.prisma.habit.create({ data: createHabitDto });
+  create(createHabitDto: CreateHabitDto): Promise<HabitWithCategoryAndRecords> {
+    return this.prisma.habit.create({
+      data: createHabitDto,
+      include: {
+        habitCategory: { select: { name: true, icon: true } },
+        dailyRecords: { select: { date: true } },
+      },
+    });
   }
 
   findOne(id: number): Promise<Habit> {
@@ -30,7 +36,7 @@ export class HabitsService {
   findAllByUserId(
     userId: number,
     filterHabitsDto: FilterHabitsDto,
-  ): Promise<HabitsWithCategoryAndRecords[]> {
+  ): Promise<HabitWithCategoryAndRecords[]> {
     return this.prisma.habit.findMany({
       where: {
         userId,

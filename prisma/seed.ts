@@ -6,57 +6,57 @@ async function main() {
   const habitCategories = [
     {
       id: 1,
-      name: 'mental-health',
+      name: 'Salud física',
       icon: 'heart',
     },
     {
       id: 2,
-      name: 'physical-health',
+      name: 'Salud mental',
       icon: 'arm-flex',
     },
     {
       id: 3,
-      name: 'education',
+      name: 'Educación',
       icon: 'school',
     },
     {
       id: 4,
-      name: 'finance',
+      name: 'Finanzas',
       icon: 'cash',
     },
     {
       id: 5,
-      name: 'productivity',
+      name: 'Productividad',
       icon: 'briefcase',
     },
     {
       id: 6,
-      name: 'social',
+      name: 'Social',
       icon: 'account-group',
     },
     {
       id: 7,
-      name: 'art',
+      name: 'Arte y creatividad',
       icon: 'palette',
     },
     {
       id: 8,
-      name: 'environment',
+      name: 'Medio ambiente',
       icon: 'leaf',
     },
     {
       id: 9,
-      name: 'tecnology',
+      name: 'Tecnología',
       icon: 'laptop',
     },
     {
       id: 10,
-      name: 'spirituality',
+      name: 'Espiritualidad',
       icon: 'hands-pray',
     },
     {
       id: 11,
-      name: 'other',
+      name: 'Otro',
       icon: 'help',
     },
   ];

@@ -28,6 +28,7 @@ model User {
 model HabitCategory {
   id        Int      @id @default(autoincrement())
   name      String
+  icon      String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   habits    Habit[]
@@ -37,6 +38,9 @@ model Habit {
   id              Int           @id @default(autoincrement())
   name            String
   description     String
+  frequency       String
+  target          Int
+  unit            String
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
   user            User          @relation(fields: [userId], references: [id])
@@ -44,7 +48,6 @@ model Habit {
   habitCategory   HabitCategory @relation(fields: [habitCategoryId], references: [id])
   habitCategoryId Int
   dailyRecords    DailyRecord[]
-  goals           Goal[]
   reminders       Reminder[]
 }
 
@@ -55,16 +58,6 @@ model DailyRecord {
   updatedAt DateTime @updatedAt
   habit     Habit    @relation(fields: [habitId], references: [id])
   habitId   Int
-}
-
-model Goal {
-  id          Int      @id @default(autoincrement())
-  frequency   String
-  targetValue Int
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  habit       Habit    @relation(fields: [habitId], references: [id])
-  habitId     Int
 }
 
 model Reminder {

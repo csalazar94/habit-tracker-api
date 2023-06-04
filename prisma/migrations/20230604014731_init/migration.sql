@@ -17,6 +17,7 @@ CREATE TABLE "User" (
 CREATE TABLE "HabitCategory" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
+    "icon" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL
 );
@@ -26,6 +27,9 @@ CREATE TABLE "Habit" (
     "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "frequency" TEXT NOT NULL,
+    "target" INTEGER NOT NULL,
+    "unit" TEXT NOT NULL,
     "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" DATETIME NOT NULL,
     "userId" INTEGER NOT NULL,
@@ -42,17 +46,6 @@ CREATE TABLE "DailyRecord" (
     "updatedAt" DATETIME NOT NULL,
     "habitId" INTEGER NOT NULL,
     CONSTRAINT "DailyRecord_habitId_fkey" FOREIGN KEY ("habitId") REFERENCES "Habit" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
-);
-
--- CreateTable
-CREATE TABLE "Goal" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "frequency" TEXT NOT NULL,
-    "targetValue" INTEGER NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
-    "habitId" INTEGER NOT NULL,
-    CONSTRAINT "Goal_habitId_fkey" FOREIGN KEY ("habitId") REFERENCES "Habit" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
 -- CreateTable

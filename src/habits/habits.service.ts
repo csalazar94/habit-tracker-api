@@ -1,9 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { Habit } from '@prisma/client';
+import { Habit, Prisma } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateHabitDto } from './dto/create-habit.dto';
 import { FilterHabitsDto } from './dto/filter-habit.dto';
 import { UpdateHabitDto } from './dto/update-habit.dto';
+
+const habitsWithCategoryAndRecords = Prisma.validator<Prisma.HabitArgs>()({
+  include: {
+    habitCategory: { select: { name: true } },
+    dailyRecords: { select: { date: true } },
+  },
+});
+type HabitsWithCategoryAndRecords = Prisma.HabitGetPayload<
+  typeof habitsWithCategoryAndRecords
+>;
 
 @Injectable()
 export class HabitsService {
@@ -20,13 +30,17 @@ export class HabitsService {
   findAllByUserId(
     userId: number,
     filterHabitsDto: FilterHabitsDto,
-  ): Promise<Habit[]> {
+  ): Promise<HabitsWithCategoryAndRecords[]> {
     return this.prisma.habit.findMany({
       where: {
         userId,
         habitCategoryId: filterHabitsDto.habitCategoryId,
         name: { contains: filterHabitsDto.name },
         description: { contains: filterHabitsDto.description },
+      },
+      include: {
+        habitCategory: { select: { name: true } },
+        dailyRecords: { select: { date: true } },
       },
     });
   }

@@ -3,4 +3,7 @@ export class CreateHabitDto {
   habitCategoryId: number;
   name: string;
   description: string;
+  frequency: string;
+  target: number;
+  unit: string;
 }

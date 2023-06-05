@@ -9,9 +9,14 @@ import { HabitCategoriesModule } from './habit-categories/habit-categories.modul
 import { RemindersModule } from './reminders/reminders.module';
 import { DailyRecordsModule } from './daily-records/daily-records.module';
 import { DelayMiddleware } from './middlewares/delay.middleware';
+import { ConfigModule } from '@nestjs/config';
+import dayjsConfiguration from './config/dayjs';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      load: [dayjsConfiguration],
+    }),
     PrismaModule,
     UsersModule,
     AuthModule,

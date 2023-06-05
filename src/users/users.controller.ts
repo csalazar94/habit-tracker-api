@@ -10,14 +10,12 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import {
-  HabitsService,
-  HabitWithCategoryAndRecords,
-} from 'src/habits/habits.service';
+import { HabitsService } from 'src/habits/habits.service';
 import { CreateHabitDto } from 'src/habits/dto/create-habit.dto';
 import { FilterHabitsDto } from 'src/habits/dto/filter-habit.dto';
-import { DailyRecord, Habit, User } from '@prisma/client';
+import { DailyRecord, User } from '@prisma/client';
 import * as dayjs from 'dayjs';
+import { constants } from 'src/constants';
 
 @Controller('users')
 export class UsersController {
@@ -25,11 +23,6 @@ export class UsersController {
     private readonly usersService: UsersService,
     private readonly habitsService: HabitsService,
   ) {}
-  FREQUENCY_DICT = {
-    weekly: 'week',
-    monthly: 'month',
-    yearly: 'year',
-  };
 
   @Post()
   create(@Body() createUserDto: CreateUserDto): Promise<User> {
@@ -62,7 +55,7 @@ export class UsersController {
       const count: number = habit.dailyRecords.filter((record) =>
         dayjs(record.date).isSame(
           dayjs(),
-          this.FREQUENCY_DICT[habit.frequency],
+          constants.frequencies[habit.frequency],
         ),
       ).length;
       return {
@@ -82,7 +75,10 @@ export class UsersController {
       userId: +id,
     });
     const count: number = habit.dailyRecords.filter((record: DailyRecord) =>
-      dayjs(record.date).isSame(dayjs(), this.FREQUENCY_DICT[habit.frequency]),
+      dayjs(record.date).isSame(
+        dayjs(),
+        constants.frequencies[habit.frequency],
+      ),
     ).length;
     return {
       ...habit,

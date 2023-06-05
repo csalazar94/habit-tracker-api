@@ -7,12 +7,12 @@ async function main() {
     {
       id: 1,
       name: 'Salud física',
-      icon: 'heart',
+      icon: 'arm-flex',
     },
     {
       id: 2,
       name: 'Salud mental',
-      icon: 'arm-flex',
+      icon: 'brain',
     },
     {
       id: 3,

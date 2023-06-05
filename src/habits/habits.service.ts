@@ -8,7 +8,7 @@ import { UpdateHabitDto } from './dto/update-habit.dto';
 const habitWithCategoryAndRecords = Prisma.validator<Prisma.HabitArgs>()({
   include: {
     habitCategory: { select: { name: true, icon: true } },
-    dailyRecords: { select: { date: true } },
+    dailyRecords: { select: { id: true, date: true } },
   },
 });
 export type HabitWithCategoryAndRecords = Prisma.HabitGetPayload<
@@ -24,13 +24,19 @@ export class HabitsService {
       data: createHabitDto,
       include: {
         habitCategory: { select: { name: true, icon: true } },
-        dailyRecords: { select: { date: true } },
+        dailyRecords: { select: { id: true, date: true } },
       },
     });
   }
 
-  findOne(id: number): Promise<Habit> {
-    return this.prisma.habit.findUnique({ where: { id } });
+  findOne(id: number): Promise<HabitWithCategoryAndRecords> {
+    return this.prisma.habit.findUnique({
+      where: { id },
+      include: {
+        habitCategory: { select: { name: true, icon: true } },
+        dailyRecords: { select: { id: true, date: true } },
+      },
+    });
   }
 
   findAllByUserId(
@@ -45,7 +51,7 @@ export class HabitsService {
       },
       include: {
         habitCategory: { select: { name: true, icon: true } },
-        dailyRecords: { select: { date: true } },
+        dailyRecords: { select: { id: true, date: true } },
       },
     });
   }

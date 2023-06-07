@@ -46,16 +46,5 @@ CREATE TABLE "DailyRecord" (
     CONSTRAINT "DailyRecord_habitId_fkey" FOREIGN KEY ("habitId") REFERENCES "Habit" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
 );
 
--- CreateTable
-CREATE TABLE "Reminder" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "time" DATETIME NOT NULL,
-    "message" TEXT NOT NULL,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL,
-    "habitId" INTEGER NOT NULL,
-    CONSTRAINT "Reminder_habitId_fkey" FOREIGN KEY ("habitId") REFERENCES "Habit" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
-);
-
 -- CreateIndex
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");

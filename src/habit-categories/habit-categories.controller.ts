@@ -8,8 +8,8 @@ export class HabitCategoriesController {
     private readonly habitCategoriesService: HabitCategoriesService,
   ) {}
 
-  @Get()
-  findAll(): Promise<HabitCategory[]> {
+  @Get('')
+  async findAll(): Promise<HabitCategory[]> {
     return this.habitCategoriesService.findAll();
   }
 }

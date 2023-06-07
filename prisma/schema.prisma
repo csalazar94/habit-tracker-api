@@ -46,22 +46,11 @@ model Habit {
   habitCategory   HabitCategory @relation(fields: [habitCategoryId], references: [id])
   habitCategoryId Int
   dailyRecords    DailyRecord[]
-  reminders       Reminder[]
 }
 
 model DailyRecord {
   id        Int      @id @default(autoincrement())
   date      DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  habit     Habit    @relation(fields: [habitId], references: [id])
-  habitId   Int
-}
-
-model Reminder {
-  id        Int      @id @default(autoincrement())
-  time      DateTime
-  message   String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   habit     Habit    @relation(fields: [habitId], references: [id])

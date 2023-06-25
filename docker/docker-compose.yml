@@ -1,0 +1,33 @@
+version: '3.1'
+
+services:
+  api:
+    platform: linux/amd64
+    container_name: habits-tracker-api
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    ports:
+      - ${DOCKER_APP_PORT}:${PORT}
+      - 5555:5555
+    networks:
+      - backend
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+
+  db:
+    container_name: habits-tracker-db
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_DATABASE}
+    ports:
+      - ${DOCKER_DB_PORT}:${DB_PORT}
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge

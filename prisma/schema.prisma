@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
@@ -17,11 +17,11 @@ model User {
   email     String    @unique
   password  String
   gender    String?
-  dob       DateTime?
+  dob       DateTime? @db.Date
   weight    Float?
   height    Float?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  createdAt DateTime  @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime  @updatedAt @db.Timestamptz(3)
   habits    Habit[]
 }
 
@@ -29,8 +29,8 @@ model HabitCategory {
   id        Int      @id @default(autoincrement())
   name      String
   icon      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
   habits    Habit[]
 }
 
@@ -39,8 +39,8 @@ model Habit {
   name            String
   frequency       String
   target          Int
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  createdAt       DateTime      @default(now()) @db.Timestamptz(3)
+  updatedAt       DateTime      @updatedAt @db.Timestamptz(3)
   user            User          @relation(fields: [userId], references: [id])
   userId          Int
   habitCategory   HabitCategory @relation(fields: [habitCategoryId], references: [id])
@@ -50,9 +50,11 @@ model Habit {
 
 model DailyRecord {
   id        Int      @id @default(autoincrement())
-  date      DateTime
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  date      DateTime @db.Date
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
   habit     Habit    @relation(fields: [habitId], references: [id])
   habitId   Int
+
+  @@unique([date, habitId])
 }

@@ -1,4 +1,11 @@
+import { Type } from 'class-transformer';
+import { IsDate, IsInt } from 'class-validator';
+
 export class CreateDailyRecordDto {
-  readonly habitId: number;
-  readonly date: Date;
+  @IsInt()
+  habitId: number;
+
+  @IsDate()
+  @Type(() => Date)
+  date: Date;
 }

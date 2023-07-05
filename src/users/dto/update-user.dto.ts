@@ -1,5 +1,13 @@
 import { OmitType } from '@nestjs/mapped-types';
-import { IsIn, IsInt, IsNotEmpty, IsOptional, Max } from 'class-validator';
+import {
+  IsIn,
+  IsInt,
+  IsNotEmpty,
+  IsOptional,
+  Max,
+  Validate,
+} from 'class-validator';
+import { IsCustomDateString } from 'src/helpers/validation';
 import { CreateUserDto } from './create-user.dto';
 
 export class UpdateUserDto extends OmitType(CreateUserDto, [
@@ -12,6 +20,7 @@ export class UpdateUserDto extends OmitType(CreateUserDto, [
 
   @IsOptional()
   @IsNotEmpty({ message: 'La fecha de nacimiento no puede ser vacia' })
+  @Validate(IsCustomDateString)
   dob: string;
 
   @IsOptional()

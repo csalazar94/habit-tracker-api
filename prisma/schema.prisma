@@ -11,17 +11,17 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   firstName String
   lastName  String
-  email     String    @unique
+  email     String   @unique
   password  String
   gender    String?
-  dob       DateTime? @db.Date
+  dob       String?
   weight    Float?
   height    Float?
-  createdAt DateTime  @default(now()) @db.Timestamptz(3)
-  updatedAt DateTime  @updatedAt @db.Timestamptz(3)
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  updatedAt DateTime @updatedAt @db.Timestamptz(3)
   habits    Habit[]
 }
 
@@ -50,7 +50,7 @@ model Habit {
 
 model DailyRecord {
   id        Int      @id @default(autoincrement())
-  date      DateTime @db.Date
+  date      String
   createdAt DateTime @default(now()) @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
   habit     Habit    @relation(fields: [habitId], references: [id])

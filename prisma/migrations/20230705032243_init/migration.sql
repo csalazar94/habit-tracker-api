@@ -6,7 +6,7 @@ CREATE TABLE "User" (
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "gender" TEXT,
-    "dob" DATE,
+    "dob" TEXT,
     "weight" DOUBLE PRECISION,
     "height" DOUBLE PRECISION,
     "createdAt" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -43,7 +43,7 @@ CREATE TABLE "Habit" (
 -- CreateTable
 CREATE TABLE "DailyRecord" (
     "id" SERIAL NOT NULL,
-    "date" DATE NOT NULL,
+    "date" TEXT NOT NULL,
     "createdAt" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMPTZ(3) NOT NULL,
     "habitId" INTEGER NOT NULL,

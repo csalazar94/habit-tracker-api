@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   firstName String
   lastName  String
   email     String   @unique
@@ -26,7 +26,7 @@ model User {
 }
 
 model HabitCategory {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   name      String
   icon      String
   createdAt DateTime @default(now()) @db.Timestamptz(3)
@@ -35,26 +35,26 @@ model HabitCategory {
 }
 
 model Habit {
-  id              Int           @id @default(autoincrement())
+  id              String        @id @default(uuid())
   name            String
   frequency       String
   target          Int
   createdAt       DateTime      @default(now()) @db.Timestamptz(3)
   updatedAt       DateTime      @updatedAt @db.Timestamptz(3)
   user            User          @relation(fields: [userId], references: [id])
-  userId          Int
+  userId          String
   habitCategory   HabitCategory @relation(fields: [habitCategoryId], references: [id])
-  habitCategoryId Int
+  habitCategoryId String
   dailyRecords    DailyRecord[]
 }
 
 model DailyRecord {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   date      String
   createdAt DateTime @default(now()) @db.Timestamptz(3)
   updatedAt DateTime @updatedAt @db.Timestamptz(3)
   habit     Habit    @relation(fields: [habitId], references: [id])
-  habitId   Int
+  habitId   String
 
   @@unique([date, habitId])
 }

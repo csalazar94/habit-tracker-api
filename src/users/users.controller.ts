@@ -11,7 +11,7 @@ import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { HabitsService } from 'src/habits/habits.service';
-import { CreateHabitDto } from 'src/habits/dto/create-habit.dto';
+import { CreateHabitWithoutUserIdDto } from 'src/habits/dto/create-habit.dto';
 import { FilterHabitsDto } from 'src/habits/dto/filter-habit.dto';
 import { DailyRecord, User } from '@prisma/client';
 import * as dayjs from 'dayjs';
@@ -31,7 +31,7 @@ export class UsersController {
 
   @Get(':id')
   findOne(@Param('id') id: string): Promise<User> {
-    return this.usersService.findOne(+id);
+    return this.usersService.findOne(id);
   }
 
   @Patch(':id')
@@ -39,7 +39,7 @@ export class UsersController {
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
   ): Promise<User> {
-    return this.usersService.update(+id, updateUserDto);
+    return this.usersService.update(id, updateUserDto);
   }
 
   @Get(':id/habits')
@@ -48,12 +48,12 @@ export class UsersController {
     @Query() filterHabitsDto: FilterHabitsDto,
   ) {
     const habits = await this.habitsService.findAllByUserId(
-      +id,
+      id,
       filterHabitsDto,
     );
     return habits.map((habit) => {
       const count: number = habit.dailyRecords.filter((record) =>
-        dayjs(record.date).isSame(
+        dayjs(record.date, 'YYYY-MM-DD').isSame(
           dayjs(),
           constants.frequencies[habit.frequency],
         ),
@@ -68,14 +68,14 @@ export class UsersController {
   @Post(':id/habits')
   async createHabit(
     @Param('id') id: string,
-    @Body() createHabitDto: CreateHabitDto,
+    @Body() createHabitDto: CreateHabitWithoutUserIdDto,
   ) {
     const habit = await this.habitsService.create({
       ...createHabitDto,
-      userId: +id,
+      userId: id,
     });
     const count: number = habit.dailyRecords.filter((record: DailyRecord) =>
-      dayjs(record.date).isSame(
+      dayjs(record.date, 'YYYY-MM-DD').isSame(
         dayjs(),
         constants.frequencies[habit.frequency],
       ),

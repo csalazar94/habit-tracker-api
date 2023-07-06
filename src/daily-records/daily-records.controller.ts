@@ -15,7 +15,7 @@ export class DailyRecordsController {
   }
 
   @Delete(':id')
-  async remove(@Param('id') id: number): Promise<DailyRecord> {
-    return this.dailyRecordService.remove(+id);
+  async remove(@Param('id') id: string): Promise<DailyRecord> {
+    return this.dailyRecordService.remove(id);
   }
 }

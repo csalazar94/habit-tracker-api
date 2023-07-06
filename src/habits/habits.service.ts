@@ -29,7 +29,7 @@ export class HabitsService {
     });
   }
 
-  findOne(id: number): Promise<HabitWithCategoryAndRecords> {
+  findOne(id: string): Promise<HabitWithCategoryAndRecords> {
     return this.prisma.habit.findUnique({
       where: { id },
       include: {
@@ -40,7 +40,7 @@ export class HabitsService {
   }
 
   findAllByUserId(
-    userId: number,
+    userId: string,
     filterHabitsDto: FilterHabitsDto,
   ): Promise<HabitWithCategoryAndRecords[]> {
     return this.prisma.habit.findMany({
@@ -56,7 +56,7 @@ export class HabitsService {
     });
   }
 
-  update(id: number, updateHabitDto: UpdateHabitDto): Promise<Habit> {
+  update(id: string, updateHabitDto: UpdateHabitDto): Promise<Habit> {
     return this.prisma.habit.update({
       where: { id },
       data: updateHabitDto,

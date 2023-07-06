@@ -11,9 +11,9 @@ export class HabitsController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const habit = await this.habitsService.findOne(+id);
+    const habit = await this.habitsService.findOne(id);
     const count: number = habit.dailyRecords.filter((record: DailyRecord) =>
-      dayjs(record.date).isSame(
+      dayjs(record.date, 'YYYY-MM-DD').isSame(
         dayjs(),
         constants.frequencies[habit.frequency],
       ),
@@ -29,6 +29,6 @@ export class HabitsController {
     @Param('id') id: string,
     @Body() updateHabitDto: UpdateHabitDto,
   ): Promise<Habit> {
-    return this.habitsService.update(+id, updateHabitDto);
+    return this.habitsService.update(id, updateHabitDto);
   }
 }

@@ -22,7 +22,7 @@ export class DailyRecordsService {
     });
   }
 
-  async remove(id: number): Promise<DailyRecord> {
+  async remove(id: string): Promise<DailyRecord> {
     return this.prisma.dailyRecord.delete({
       where: {
         id,
@@ -30,4 +30,3 @@ export class DailyRecordsService {
     });
   }
 }
-

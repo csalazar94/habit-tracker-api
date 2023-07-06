@@ -31,7 +31,7 @@ export class UsersService {
     }
   }
 
-  findOne(id: number): Promise<User> {
+  findOne(id: string): Promise<User> {
     return this.prisma.user.findUnique({ where: { id } });
   }
 
@@ -39,7 +39,7 @@ export class UsersService {
     return this.prisma.user.findUnique({ where: { email } });
   }
 
-  update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
+  update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     return this.prisma.user.update({
       where: { id },
       data: updateUserDto,

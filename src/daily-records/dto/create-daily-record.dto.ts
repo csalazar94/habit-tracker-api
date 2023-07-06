@@ -1,9 +1,9 @@
-import { IsInt, IsNotEmpty, Validate } from 'class-validator';
+import { IsNotEmpty, Validate, IsUUID } from 'class-validator';
 import { IsCustomDateString } from 'src/helpers/validation';
 
 export class CreateDailyRecordDto {
-  @IsInt()
-  habitId: number;
+  @IsUUID()
+  habitId: string;
 
   @IsNotEmpty()
   @Validate(IsCustomDateString)

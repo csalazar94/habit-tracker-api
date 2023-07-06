@@ -1,4 +1,11 @@
+import { IsNotEmpty, IsOptional, IsUUID } from 'class-validator';
+
 export class FilterHabitsDto {
-  habitCategoryId?: number;
+  @IsOptional()
+  @IsUUID()
+  habitCategoryId?: string;
+
+  @IsOptional()
+  @IsNotEmpty()
   name?: string;
 }

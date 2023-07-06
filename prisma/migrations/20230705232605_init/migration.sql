@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "User" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "firstName" TEXT NOT NULL,
     "lastName" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -17,7 +17,7 @@ CREATE TABLE "User" (
 
 -- CreateTable
 CREATE TABLE "HabitCategory" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "icon" TEXT NOT NULL,
     "createdAt" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -28,25 +28,25 @@ CREATE TABLE "HabitCategory" (
 
 -- CreateTable
 CREATE TABLE "Habit" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "frequency" TEXT NOT NULL,
     "target" INTEGER NOT NULL,
     "createdAt" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMPTZ(3) NOT NULL,
-    "userId" INTEGER NOT NULL,
-    "habitCategoryId" INTEGER NOT NULL,
+    "userId" TEXT NOT NULL,
+    "habitCategoryId" TEXT NOT NULL,
 
     CONSTRAINT "Habit_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
 CREATE TABLE "DailyRecord" (
-    "id" SERIAL NOT NULL,
+    "id" TEXT NOT NULL,
     "date" TEXT NOT NULL,
     "createdAt" TIMESTAMPTZ(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMPTZ(3) NOT NULL,
-    "habitId" INTEGER NOT NULL,
+    "habitId" TEXT NOT NULL,
 
     CONSTRAINT "DailyRecord_pkey" PRIMARY KEY ("id")
 );

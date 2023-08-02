@@ -2,10 +2,10 @@ import { IsNotEmpty, IsOptional, IsUUID } from 'class-validator';
 
 export class FilterHabitsDto {
   @IsOptional()
-  @IsUUID()
-  habitCategoryId?: string;
+  @IsUUID('all', { message: 'El id del usuario no es válido' })
+  habitCategoryId: string;
 
   @IsOptional()
-  @IsNotEmpty()
-  name?: string;
+  @IsNotEmpty({ message: 'El nombre no puede ser vacio' })
+  name: string;
 }

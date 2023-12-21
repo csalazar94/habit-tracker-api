@@ -9,6 +9,7 @@ import { HabitCategoriesModule } from './habit-categories/habit-categories.modul
 import { DailyRecordsModule } from './daily-records/daily-records.module';
 import { DelayMiddleware } from './middlewares/delay.middleware';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { MailerModule } from './mailer/mailer.module';
 import dayjsConfiguration from './config/dayjs';
 import appConfiguration from './config/app';
 
@@ -23,6 +24,7 @@ import appConfiguration from './config/app';
     HabitsModule,
     HabitCategoriesModule,
     DailyRecordsModule,
+    MailerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
